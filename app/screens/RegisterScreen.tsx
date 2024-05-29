@@ -1,67 +1,53 @@
-import { ActivityIndicator, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "../cssStyles/styles";
-import colors from "../cssStyles/color";
-import { useState } from "react";
-import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
-import { saveUserData, signup } from "../services/firebase-utils";
+// app/screens/RegisterScreen.tsx
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { RegisterScreenProps } from '../navigation/types';
+import { signup } from '../services/firebase-utils';
+import Toast from 'react-native-toast-message';
+import styles from '../cssStyles/styles';
 
-const RegisterScreen = () => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigation : NavigationProp<ParamListBase>=useNavigation();
+const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSignup = async () => {
-        setLoading(true);
-        try {
-            const user = await signup(email, password);
-            if (user) {
-                const id = user.uid;
-                await saveUserData(id, firstName, lastName);
-            }
-        } catch (error: any) {
-            if (error.code === "auth/email-already-in-use") {
-                alert("Email already in use.");
-            } else if (error.code === "auth/weak-password") {
-                alert("Password is too weak.");
-            } else {
-                alert('Signup error: ' + error.message);
-            }
-        }
-        setLoading(false);
-    };
+  const handleRegister = async () => {
+    try {
+      await signup(email, password);
+      navigation.navigate('Home');
+    } catch (error) {
+      let errorMessage = 'An unknown error occurred';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      console.error('Registration error: ', errorMessage);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: errorMessage
+      });
+    }
+  };
 
-    const handleLogin = () => {
-        navigation.navigate("Login");
-    };
-
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Image source={require("../../assets/icon.png")} style={styles.image}/>
-                    <Text style={styles.title}>Register</Text>
-
-                    <TextInput style={styles.input} placeholder="Firstname" autoCapitalize="none" value={firstName} onChangeText={setFirstName} />
-                    <TextInput style={styles.input} placeholder="Lastname" autoCapitalize="none" value={lastName} onChangeText={setLastName} />
-                    <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" autoCapitalize="none" value={email} onChangeText={setEmail} />
-                    <TextInput style={styles.input} placeholder="Password" secureTextEntry autoCapitalize="none" value={password} onChangeText={setPassword} />
-
-                    {loading ? 
-                        <ActivityIndicator size="large" color={colors.primary} /> :
-                        <TouchableOpacity style={styles.buttonContainer} onPress={handleSignup} >
-                            <Text style={styles.buttonText}>Register</Text>
-                        </TouchableOpacity>
-                    }
-                    <TouchableOpacity onPress={handleLogin} >
-                        <Text style={styles.loginText}>Already have an account? Login here.</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </ScrollView>
-    );
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <Button title="Register" onPress={handleRegister} />
+      <Button title="Go to Login" onPress={() => navigation.navigate('Login')} />
+    </View>
+  );
 };
 
 export default RegisterScreen;

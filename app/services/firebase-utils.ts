@@ -1,29 +1,28 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { FIREBASE_AUTH, FIRESTORE_DB } from "../../FirebaseConfig";
-import { collection } from "firebase/firestore";
-import { FIREBASE_STORAGE } from "../../FirebaseConfig";
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { collection } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { auth, db, storage } from '../../FirebaseConfig';
 
 export const login = async (email: string, password: string) => {
     try {
-        const userCredential = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log("User logged in: ", user);
         return user;
     } catch (error) {
-        console.log("Login error: ", error);
+        console.error('Login error: ', (error as Error).message);
         throw error;
     }
 };
 
 export const signup = async (email: string, password: string) => {
     try {
-        const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log(user);
         return user;
     } catch (error) {
-        console.log("Signup error: ", error);
+        console.error('Signup error: ', (error as Error).message);
         throw error;
     }
 };
@@ -37,13 +36,13 @@ export const saveUserData = async (id: string, firstName: string, lastName: stri
 };
 
 export const logout = () => {
-    return signOut(FIREBASE_AUTH);
+    return signOut(auth);
 }
 
 export const uploadImage = async (uri: string, imageName: string) => {
-    const user = FIREBASE_AUTH.currentUser;
+    const user = auth.currentUser;
     const path = `uploads/${user!.uid}/${imageName}`;
-    const storageRef = ref(FIREBASE_STORAGE, path);
+    const storageRef = ref(storage, path);
     try {
         console.log('Uploading image: ', uri);
         // Upload image to Firebase Storage
@@ -52,7 +51,7 @@ export const uploadImage = async (uri: string, imageName: string) => {
         console.log('Image uploaded: ', imageUrl);
         return imageUrl;
     } catch (error) {
-        console.log('Error uploading image: ', error);
+        console.error('Error uploading image: ', (error as Error).message);
         return null;
     }
 }

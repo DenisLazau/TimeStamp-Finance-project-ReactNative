@@ -1,15 +1,18 @@
+// app/navigation/types.ts
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-// Define the navigation parameters for HomeScreen
 export type RootStackParam = {
-  Details: { id: string };
+  Home: undefined;
   Login: undefined;
   Register: undefined;
-  Home: undefined;
+  News: undefined;
+  Stocks: undefined;
+  Settings: undefined;
 };
 
-// Use the NativeStackScreenProps with defined navigation parameters for each screen
 export type HomeScreenProps = NativeStackScreenProps<RootStackParam, 'Home'>;
-export type DetailsScreenProps = NativeStackScreenProps<RootStackParam, 'Details'>;
 export type LoginScreenProps = NativeStackScreenProps<RootStackParam, 'Login'>;
 export type RegisterScreenProps = NativeStackScreenProps<RootStackParam, 'Register'>;
+export type NewsScreenProps = NativeStackScreenProps<RootStackParam, 'News'>;
+export type StocksScreenProps = NativeStackScreenProps<RootStackParam, 'Stocks'>;
+export type SettingsScreenProps = NativeStackScreenProps<RootStackParam, 'Settings'>;
