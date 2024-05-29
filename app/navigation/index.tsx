@@ -7,7 +7,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import NewsScreen from '../screens/NewsScreen';
 import StocksScreen from '../screens/StocksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/SettingScreen';
 import { RootStackParam } from './types';
 
 const Stack = createNativeStackNavigator<RootStackParam>();

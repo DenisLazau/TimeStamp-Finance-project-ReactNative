@@ -9,7 +9,7 @@ import Toast from 'react-native-toast-message';
 import { RootStackParam } from './app/navigation/types';
 import StocksScreen from './app/screens/StocksScreen';
 import NewsScreen from './app/screens/NewsScreen';
-import SettingsScreen from './app/screens/SettingsScreen';
+import SettingsScreen from './app/screens/SettingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParam>();
 

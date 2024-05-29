@@ -9,8 +9,11 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     width: '100%',
     padding: 10,
     backgroundColor: '#f8f8f8',
@@ -21,6 +24,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    marginTop: 60, // Adjust margin to avoid overlap with header
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+  },
+  button: {
+    marginHorizontal: 10,
   },
   input: {
     width: '100%',
@@ -29,12 +41,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
+  }
 });
 
 export default styles;

@@ -4,12 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDrgmRL7syEx-ohms-J-yLc5I6OcAnFl8E",
-  authDomain: "ionic-smart-reporter-567e6.firebaseapp.com",
-  projectId: "ionic-smart-reporter-567e6",
-  storageBucket: "ionic-smart-reporter-567e6.appspot.com",
-  messagingSenderId: "1047691467068",
-  appId: "1:1047691467068:web:4c2c1bbafdca8072292639"
+  apiKey: "AIzaSyBBf4o0xkRq4uahE-QM62Xh0AFLUwSmOAE",
+  authDomain: "timestampfinance.firebaseapp.com",
+  projectId: "timestampfinance",
+  storageBucket: "timestampfinance.appspot.com",
+  messagingSenderId: "1032687476839",
+  appId: "1:1032687476839:web:7640997014b903833cb4c2",
+  measurementId: "G-LF740Q6B1G"
 };
 
 // Initialize Firebase
