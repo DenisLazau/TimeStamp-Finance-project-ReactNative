@@ -1,10 +1,11 @@
 // app/screens/LoginScreen.tsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button } from 'react-native';
 import { LoginScreenProps } from '../navigation/types';
 import { login } from '../services/firebase-utils';
 import Toast from 'react-native-toast-message';
 import styles from '../cssStyles/styles';
+import { GlobalVariables } from '../utils/GlobalVariables';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,7 +14,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       await login(email, password);
+      const emailPrefix = email.split('@')[0]; // Extract the part before the @
+      GlobalVariables.email = emailPrefix;
       navigation.navigate('Home');
+      Toast.show({
+        type: 'success',
+        text1: 'Logged in successfully',
+      });
     } catch (error) {
       let errorMessage = 'An unknown error occurred';
       if (error instanceof Error) {
@@ -23,7 +30,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: errorMessage
+        text2: errorMessage,
       });
     }
   };

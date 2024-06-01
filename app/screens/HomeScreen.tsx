@@ -7,16 +7,14 @@ import styles from '../cssStyles/styles';
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Button title="News" onPress={() => navigation.navigate('News')} />
-        <Button title="Stocks" onPress={() => navigation.navigate('Stocks')} />
-        <Button title="Settings" onPress={() => navigation.navigate('Settings')} />
-      </View>
-      <Text style={styles.title}>Welcome to Finance News App</Text>
+      <Text style={styles.title}>TimeStamp Finance</Text>
       <Image
-        source={{ uri: 'https://example.com/path/to/your/image.png' }} // Replace with your image URL
+        source={{ uri: '../assets/logo.webp' }} // Replace with your image URL
         style={styles.image}
       />
+      <Text style={styles.description}>
+        TimeStamp Finance keeps you updated with the latest finance news, stock trends, and market insights, ensuring you stay informed.
+      </Text>
       <Button title="Go to Login" onPress={() => navigation.navigate('Login')} />
     </View>
   );

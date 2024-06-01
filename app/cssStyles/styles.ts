@@ -15,20 +15,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
-    padding: 10,
+    padding: 14, // 40% increase from 10
     backgroundColor: '#f8f8f8',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
+  userContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 450,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 60, // Adjust margin to avoid overlap with header
+    marginTop: 60,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 400,
+    height: 400,
     marginBottom: 20,
   },
   button: {
@@ -41,7 +51,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-  }
+  },
+  userIcon: {
+    width: 34,
+    height: 34,
+    marginRight: 8,
+  },
+  userEmail: {
+    fontSize: 20,
+  },
+  description: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 20,
+    paddingHorizontal: 10,
+  },
 });
 
 export default styles;
