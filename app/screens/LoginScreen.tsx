@@ -15,7 +15,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     try {
       await login(email, password);
       const emailPrefix = email.split('@')[0]; // Extract the part before the @
-      GlobalVariables.email = emailPrefix;
+      GlobalVariables.setEmail(emailPrefix);  // Update the global variable
       navigation.navigate('Home');
       Toast.show({
         type: 'success',

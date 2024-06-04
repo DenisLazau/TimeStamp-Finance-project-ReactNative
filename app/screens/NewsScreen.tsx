@@ -4,6 +4,7 @@ import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, TouchableOp
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GlobalVariables } from '../utils/GlobalVariables';
 
 interface NewsItem {
@@ -23,12 +24,13 @@ const NewsScreen: React.FC = () => {
     const fetchNewsData = async () => {
       setLoading(true);
       const selectedTopics = GlobalVariables.selectedTopics || 'technology';
-      const apiUrl = `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&topics=${selectedTopics}&limit=5&apikey=IME0OV7SE14RXJWR`;
+      const apiUrl =`https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=AAPL&topics=${selectedTopics}&limit=5&apikey=IME0OV7SE14RXJWR`;
 
       try {
         const response = await axios.get(apiUrl);
         const newsList = parseJsonResponse(response.data);
         setNewsData(newsList);
+        await saveNewsDataToLocalFile(newsList);
       } catch (error) {
         console.error('Error fetching news data:', error);
       } finally {
@@ -75,11 +77,21 @@ const NewsScreen: React.FC = () => {
 
   const fetchNewsSentimentFromLocalFile = async () => {
     try {
-      const response = await axios.get('../../assets/news_sentiment.json');
-      const newsList = parseJsonResponse(response.data);
-      setNewsData(newsList);
+      const response = await AsyncStorage.getItem('newsData');
+      if (response) {
+        const newsList = JSON.parse(response);
+        setNewsData(newsList);
+      }
     } catch (error) {
       console.error('Error fetching local news data:', error);
+    }
+  };
+
+  const saveNewsDataToLocalFile = async (newsList: NewsItem[]) => {
+    try {
+      await AsyncStorage.setItem('newsData', JSON.stringify(newsList));
+    } catch (error) {
+      console.error('Error saving news data to local file:', error);
     }
   };
 

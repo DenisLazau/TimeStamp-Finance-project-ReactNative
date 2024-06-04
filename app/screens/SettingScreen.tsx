@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { GlobalVariables } from '../utils/GlobalVariables';
 import styles from '../cssStyles/styles';
@@ -10,22 +9,22 @@ import styles from '../cssStyles/styles';
 const SettingsScreen: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<string>(GlobalVariables.selectedTopics);
   const [stock, setStock] = useState<string>('');
-  const navigation = useNavigation();
 
   const handleAddStock = () => {
     if (stock.trim().length > 0) {
-      GlobalVariables.symbols.push(stock.trim());
+      const newSymbols = [...GlobalVariables.symbols, stock.trim()];
+      GlobalVariables.setSymbols(newSymbols);
       Toast.show({
         type: 'success',
         text1: 'Stock Added',
-        text2: `Stock added: ${stock.trim()}`
+        text2: `Stock added: ${stock.trim()}`,
       });
       setStock('');
     } else {
       Toast.show({
         type: 'error',
         text1: 'Input Error',
-        text2: 'Please enter a stock symbol'
+        text2: 'Please enter a stock symbol',
       });
     }
   };
@@ -36,7 +35,7 @@ const SettingsScreen: React.FC = () => {
         selectedValue={selectedTopic}
         onValueChange={(itemValue) => {
           setSelectedTopic(itemValue);
-          GlobalVariables.selectedTopics = itemValue;
+          GlobalVariables.setSelectedTopics(itemValue);
         }}
         style={localStyles.picker}
       >

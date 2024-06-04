@@ -34,6 +34,7 @@ const StocksScreen: React.FC = () => {
         try {
           const response = await axios.get(
             `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=IME0OV7SE14RXJWR`
+            //'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo'
           );
           const globalQuoteObject = response.data['Global Quote'];
 

@@ -1,20 +1,26 @@
 // App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './app/screens/HomeScreen';
 import LoginScreen from './app/screens/LoginScreen';
 import RegisterScreen from './app/screens/RegisterScreen';
-import Toast from 'react-native-toast-message';
-import { RootStackParam } from './app/navigation/types';
 import StocksScreen from './app/screens/StocksScreen';
 import NewsScreen from './app/screens/NewsScreen';
 import SettingsScreen from './app/screens/SettingScreen';
+import { RootStackParam } from './app/navigation/types';
 import HeaderRightButtons from './app/components/HeaderRightButtons';
+import Toast from 'react-native-toast-message';
+import { GlobalVariables } from './app/utils/GlobalVariables';
+import { Button } from 'react-native';
 
 const Stack = createNativeStackNavigator<RootStackParam>();
 
 const App = () => {
+  useEffect(() => {
+    GlobalVariables.loadGlobalVariables();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -61,7 +67,6 @@ const App = () => {
           }}
         />
       </Stack.Navigator>
-      <Toast />
     </NavigationContainer>
   );
 };
